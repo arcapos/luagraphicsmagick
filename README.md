@@ -1,0 +1,2 @@
+# luagraphicsmagick
+GraphicsMagick for Lua
