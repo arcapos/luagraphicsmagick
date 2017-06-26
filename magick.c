@@ -532,6 +532,88 @@ gammaImage(lua_State *L)
 	return 1;
 }
 
+static const char *const channels[] = {
+	"UndefinedChannel",
+	"RedChannel",
+	"CyanChannel",
+	"GreenChannel",
+	"MagentaChannel",
+	"BlueChannel",
+	"YellowChannel",
+	"OpacityChannel",
+	"BlackChannel",
+	"MatteChannel",
+	"AllChannels",
+	"GreyChannel",
+	NULL
+};
+
+static int
+gammaImageChannel(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGammaImageChannel(*mw,
+	    luaL_checkoption(L, 2, "UndefinedChannel", channels),
+	    luaL_checknumber(L, 3)));
+	return 1;
+}
+
+static int
+getConfigureInfo(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, MagickGetConfigureInfo(*mw, luaL_checkstring(L, 2)));
+	return 1;
+}
+
+static int
+getException(lua_State *L)
+{
+	MagickWand **mw;
+	ExceptionType severity;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, MagickGetException(*mw, &severity));
+	lua_pushinteger(L, severity);
+	return 2;
+}
+
+static int
+getFilename(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, MagickGetFilename(*mw));
+	return 1;
+}
+
+static int
+getImage(lua_State *L)
+{
+	MagickWand **mw, **mw2;
+
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	mw2 = lua_newuserdata(L, sizeof(MagickWand *));
+	*mw2 = MagickGetImage(*mw);
+	luaL_setmetatable(L, MAGICK_WAND_METATABLE);
+	return 1;
+}
+
+static int
+getImageAttribute(lua_State *L)
+{
+	MagickWand **mw;
+
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, MagickGetImageAttribute(*mw, luaL_checkstring(L, 2)));
+	return 1;
+}
+
 static int
 setImageFormat(lua_State *L)
 {
@@ -754,6 +836,12 @@ struct luaL_Reg magick_wand_methods[] = {
 	{ "frameImage",			frameImage },
 	{ "fxImage",			fxImage },
 	{ "gammaImage",			gammaImage },
+	{ "gammaImageChannel",		gammaImageChannel },
+	{ "getConfigureInfo",		getConfigureInfo },
+	{ "getException",		getException },
+	{ "getFilename",		getFilename },
+	{ "getImage",			getImage },
+	{ "getImageAttribute",		getImageAttribute },
 	{ "setImageFormat",		setImageFormat },
 	{ "getImageWidth",		getImageWidth },
 	{ "getImageHeight",		getImageHeight },

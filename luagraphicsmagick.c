@@ -36,6 +36,20 @@
 #include "luagraphicsmagick.h"
 
 static int
+getCopyright(lua_State *L)
+{
+	lua_pushstring(L, MagickGetCopyright());
+	return 1;
+}
+
+static int
+getHomeURL(lua_State *L)
+{
+	lua_pushstring(L, MagickGetHomeURL());
+	return 1;
+}
+
+static int
 newDrawingWand(lua_State *L)
 {
 	DrawingWand **dw;
@@ -90,6 +104,8 @@ int
 luaopen_graphicsmagick(lua_State *L)
 {
 	struct luaL_Reg luagraphicsmagick[] = {
+		{ "getCopyright",	getCopyright },
+		{ "getHomeURL",		getHomeURL },
 		{ "newDrawingWand",	newDrawingWand },
 		{ "newMagickWand",	newMagickWand },
 		{ "newPixelWand",	newPixelWand },
@@ -145,7 +161,7 @@ luaopen_graphicsmagick(lua_State *L)
 	lua_pushliteral(L, "GraphicsMagick for Lua");
 	lua_settable(L, -3);
 	lua_pushliteral(L, "_VERSION");
-	lua_pushliteral(L, "graphicsmagick 1.1.0");
+	lua_pushliteral(L, "graphicsmagick 1.1.1");
 	lua_settable(L, -3);
 	return 1;
 }
