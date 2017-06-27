@@ -768,6 +768,144 @@ getImageColorspace(lua_State *L)
 	return 1;
 }
 
+const char *const compressions[] = {
+	"UndefinedCompression",
+	"NoCompression",
+	"BZipCompression",
+	"FaxCompression",
+	"Group4Compression",
+	"JPEGCompression",
+	"LosslessJPEGCompression",
+	"LZWCompression",
+	"RLECompression",
+	"ZipCompression",
+	NULL
+};
+
+static int
+getImageCompression(lua_State *L)
+{
+	MagickWand **mw;
+
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, compressions[MagickGetImageCompression(*mw)]);
+	return 1;
+}
+
+static int
+getImageDelay(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageDelay(*mw));
+	return 1;
+}
+
+static int
+getImageDepth(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageDepth(*mw));
+	return 1;
+}
+
+static int
+getImageExtrema(lua_State *L)
+{
+	MagickWand **mw;
+	unsigned long minima, maxima;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageExtrema(*mw, &minima, &maxima));
+	lua_pushinteger(L, minima);
+	lua_pushinteger(L, maxima);
+	return 3;
+}
+
+static int
+getImageFilename(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, MagickGetImageFilename(*mw));
+	return 1;
+}
+
+static int
+getImageFormat(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, MagickGetImageFormat(*mw));
+	return 1;
+}
+
+static int
+getImageFuzz(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushnumber(L, MagickGetImageFuzz(*mw));
+	return 1;
+}
+
+static int
+getImageGamma(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushnumber(L, MagickGetImageGamma(*mw));
+	return 1;
+}
+
+/* XXX factor out enum to string definitions? */
+static const char *const gravity[] = {
+	"ForgetGravity",
+	"NorthWestGravity",
+	"NorthGravity",
+	"NorthEastGravity",
+	"WestGravity",
+	"CenterGravity",
+	"EastGravity",
+	"SouthWestGravity",
+	"SouthGravity",
+	"SouthEastGravity",
+	"StaticGravity",
+	NULL
+};
+
+static int
+getImageGravity(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, gravity[MagickGetImageGravity(*mw)]);
+	return 1;
+}
+
+static int
+getImageGreenPrimary(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	double x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageGreenPrimary(*mw, &x, &y));
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, y);
+	return 3;
+}
+
 static int
 setImageFormat(lua_State *L)
 {
@@ -795,6 +933,16 @@ getImageHeight(lua_State *L)
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageHeight(*mw));
+	return 1;
+}
+
+static int
+getImageIndex(lua_State *L)
+{
+	MagickWand **mw;
+
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageIndex(*mw));
 	return 1;
 }
 
@@ -1004,11 +1152,22 @@ struct luaL_Reg magick_wand_methods[] = {
 	{ "getImageChannelExtrema",	getImageChannelExtrema },
 	{ "getImageChannelMean",	getImageChannelMean },
 	{ "getImageColormapColor",	getImageColormapColor },
-	{ "getImageColorspace",		getImageColorspace },
 	{ "getImageColors",		getImageColors },
+	{ "getImageColorspace",		getImageColorspace },
+	{ "getImageCompression",	getImageCompression },
+	{ "getImageDelay",		getImageDelay },
+	{ "getImageDepth",		getImageDepth },
+	{ "getImageExtrema",		getImageExtrema },
+	{ "getImageFilename",		getImageFilename },
+	{ "getImageFormat",		getImageFormat },
+	{ "getImageFuzz",		getImageFuzz },
+	{ "getImageGamma",		getImageGamma },
+	{ "getImageGravity",		getImageGravity },
+	{ "getImageGreenPrimary",	getImageGreenPrimary },
 	{ "setImageFormat",		setImageFormat },
 	{ "getImageWidth",		getImageWidth },
 	{ "getImageHeight",		getImageHeight },
+	{ "getImageIndex",		getImageIndex },
 	{ "readImage",			readImage },
 	{ "readImageBlob",		readImageBlob },
 	{ "resizeImage",		resizeImage },
