@@ -946,6 +946,146 @@ getImageIndex(lua_State *L)
 	return 1;
 }
 
+static const char *const interlaces[] = {
+	"UndefinedInterlace",
+	"NoInterlace",
+	"LineInterlace",
+	"PlaneInterlace",
+	"PartitionInterlace",
+	NULL
+};
+
+static int
+getImageInterlaceScheme(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, interlaces[MagickGetImageInterlaceScheme(*mw)]);
+	return 1;
+}
+
+static int
+getImageIterations(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageIterations(*mw));
+	return 1;
+}
+
+static int
+getImageMatteColor(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageMatteColor(*mw, *pw));
+	return 1;
+}
+
+#if 0
+static const char *const orientations[] = {
+	"UndefinedOrientation",
+	"TopLeftOrientation",
+	"TopRightOrientation",
+	"BottomRightOrientation",
+	"BottomLeftOrientation",
+	"LeftTopOrientation",
+	"RightTopOrientation",
+	"RightBottomOrientation",
+	"LeftBottomOrientation",
+	NULL
+};
+
+static int
+getImageOrientation(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, orientations[MagickGetImageOrientation(*mw)]);
+	return 1;
+}
+#endif
+
+static int
+getImagePage(lua_State *L)
+{
+	MagickWand **mw;
+	unsigned long width, height;
+	long x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImagePage(*mw, &width, &height, &x, &y));
+	lua_pushinteger(L, width);
+	lua_pushinteger(L, height);
+	lua_pushinteger(L, x);
+	lua_pushinteger(L, y);
+	return 5;
+}
+
+static int
+getImageRedPrimary(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	double x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageRedPrimary(*mw, &x, &y));
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, y);
+	return 3;
+}
+
+static const char* const intents[] = {
+	"UndefinedIntent",
+	"SalutationIntent",
+	"PerceptualIntent",
+	"AbsoluteIntent",
+	"RelativeIntent",
+	NULL
+};
+
+static int
+getImageRenderingIntent(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, intents[MagickGetImageRenderingIntent(*mw)]);
+	return 1;
+}
+
+static int
+getImageResolution(lua_State *L)
+{
+	MagickWand **mw;
+	double x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageResolution(*mw, &x, &y));
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, y);
+	return 3;
+}
+
+static int
+getImageScene(lua_State *L)
+{
+	MagickWand **mw;
+	double x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageScene(*mw));
+	return 1;
+}
+
 static int
 readImage(lua_State *L)
 {
@@ -1168,6 +1308,17 @@ struct luaL_Reg magick_wand_methods[] = {
 	{ "getImageWidth",		getImageWidth },
 	{ "getImageHeight",		getImageHeight },
 	{ "getImageIndex",		getImageIndex },
+	{ "getImageInterlaceScheme",	getImageInterlaceScheme },
+	{ "getImageIterations",		getImageIterations },
+	{ "getImageMatteColor",		getImageMatteColor },
+#if 0
+	{ "getImageOrientation",	getImageOrientation },
+#endif
+	{ "getImagePage",		getImagePage },
+	{ "getImageRedPrimary",		getImageRedPrimary },
+	{ "getImageRenderingIntent",	getImageRenderingIntent },
+	{ "getImageResolution",		getImageResolution },
+	{ "getImageScene",		getImageScene },
 	{ "readImage",			readImage },
 	{ "readImageBlob",		readImageBlob },
 	{ "resizeImage",		resizeImage },
