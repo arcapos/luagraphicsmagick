@@ -615,6 +615,160 @@ getImageAttribute(lua_State *L)
 }
 
 static int
+getImageBackgroundColor(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageBackgroundColor(*mw, *pw));
+	return 1;
+}
+
+static int
+getImageBluePrimary(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	double x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageBluePrimary(*mw, &x, &y));
+	lua_pushnumber(L, x);
+	lua_pushnumber(L, y);
+	return 3;
+}
+
+static int
+getImageBorderColor(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageBorderColor(*mw, *pw));
+	return 1;
+}
+
+static int
+getImageBoundingBox(lua_State *L)
+{
+	MagickWand **mw;
+	unsigned long width, height;
+	long x, y;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageBoundingBox(*mw,
+	    luaL_checknumber(L, 2), &width, &height, &x, &y));
+	lua_pushinteger(L, width);
+	lua_pushinteger(L, height);
+	lua_pushinteger(L, x);
+	lua_pushinteger(L, x);
+	return 5;
+}
+
+static int
+getImageChannelDepth(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageChannelDepth(*mw,
+	    luaL_checkoption(L, 2, "UndefinedChannel", channels)));
+	return 1;
+}
+
+static int
+getImageChannelExtrema(lua_State *L)
+{
+	MagickWand **mw;
+	unsigned long minima, maxima;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageChannelExtrema(*mw,
+	    luaL_checkoption(L, 2, "UndefinedChannel", channels), &minima,
+	    &maxima));
+	lua_pushinteger(L, minima);
+	lua_pushinteger(L, maxima);
+	return 3;
+}
+
+static int
+getImageChannelMean(lua_State *L)
+{
+	MagickWand **mw;
+	double mean, standard_deviation;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageChannelMean(*mw,
+	    luaL_checkoption(L, 2, "UndefinedChannel", channels), &mean,
+	    &standard_deviation));
+	lua_pushnumber(L, mean);
+	lua_pushnumber(L, standard_deviation);
+	return 3;
+}
+
+static int
+getImageColormapColor(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 3, PIXEL_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageColormapColor(*mw,
+	    luaL_checkinteger(L, 2), *pw));
+	return 1;
+}
+
+static int
+getImageColors(lua_State *L)
+{
+	MagickWand **mw;
+	
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushinteger(L, MagickGetImageColors(*mw));
+	return 1;
+}
+
+static const char *const color_spaces[] = {
+	"UndefinedColorspace",
+	"RGBColorspace",
+	"GRAYColorspace",
+	"TransparentColorspace",
+	"OHTAColorspace",
+	"XYZColorspace",
+	"YCCColorspace",
+	"YIQColorspace",
+	"YPbPrColorspace",
+	"YUVColorspace",
+	"CMYKColorspace",
+	"sRGBColorspace",
+	"HSLColorspace",
+	"HWBColorspace",
+	"LABColorspace",
+	"CineonLogRGBColorspace",
+	"Rec601LumaColorspace",
+	"Rec601YCbCrColorspace",
+	"Rec709LumaColorspace",
+	"Rec709YCbcrColorspace",
+	NULL
+};
+
+static int
+getImageColorspace(lua_State *L)
+{
+	MagickWand **mw;
+
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	lua_pushstring(L, color_spaces[MagickGetImageColorspace(*mw)]);
+	return 1;
+}
+
+static int
 setImageFormat(lua_State *L)
 {
 	MagickWand **mw;
@@ -842,6 +996,16 @@ struct luaL_Reg magick_wand_methods[] = {
 	{ "getFilename",		getFilename },
 	{ "getImage",			getImage },
 	{ "getImageAttribute",		getImageAttribute },
+	{ "getImageBackgroundColor",	getImageBackgroundColor },
+	{ "getImageBluePrimary",	getImageBluePrimary },
+	{ "getImageBorderColor",	getImageBorderColor },
+	{ "getImageBoundingBox",	getImageBoundingBox },
+	{ "getImageChannelDepth",	getImageChannelDepth },
+	{ "getImageChannelExtrema",	getImageChannelExtrema },
+	{ "getImageChannelMean",	getImageChannelMean },
+	{ "getImageColormapColor",	getImageColormapColor },
+	{ "getImageColorspace",		getImageColorspace },
+	{ "getImageColors",		getImageColors },
 	{ "setImageFormat",		setImageFormat },
 	{ "getImageWidth",		getImageWidth },
 	{ "getImageHeight",		getImageHeight },
