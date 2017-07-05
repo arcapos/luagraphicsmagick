@@ -1180,6 +1180,19 @@ scaleImage(lua_State *L)
 }
 
 static int
+setImageBackgroundColor(lua_State *L)
+{
+	MagickWand **mw;
+	PixelWand **pw;
+
+	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
+	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
+	
+	lua_pushinteger(L, MagickSetImageBackgroundColor(*mw, *pw));
+	return 1;
+}
+
+static int
 setSize(lua_State *L)
 {
 	MagickWand **mw;
@@ -1325,6 +1338,7 @@ struct luaL_Reg magick_wand_methods[] = {
 	{ "rotateImage",		rotateImage },
 	{ "sampleImage",		sampleImage },
 	{ "scaleImage",			scaleImage },
+	{ "setImageBackgroundColor",	setImageBackgroundColor },
 	{ "setSize",			setSize },
 	{ "trimImage",			trimImage },
 	{ "writeImage",			writeImage },
