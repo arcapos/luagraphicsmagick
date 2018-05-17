@@ -30,9 +30,9 @@
 #ifndef __LUAGRAPHICSMAGICK_H__
 #define __LUAGRAPHICSMAGICK_H__
 
-#define DRAWING_WAND_METATABLE		"GraphicsMagick DrawingWand methods"
-#define MAGICK_WAND_METATABLE		"GraphicsMagick MagickWand methods"
-#define PIXEL_WAND_METATABLE		"GraphicsMagick PixelWand methods"
+#define DRAWING_WAND_METATABLE		"GraphicsMagick DrawingWand"
+#define MAGICK_WAND_METATABLE		"GraphicsMagick MagickWand"
+#define PIXEL_WAND_METATABLE		"GraphicsMagick PixelWand"
 
 extern struct luaL_Reg drawing_wand_methods[];
 extern struct luaL_Reg magick_wand_methods[];

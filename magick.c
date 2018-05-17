@@ -135,7 +135,7 @@ appendImages(lua_State *L)
 {
 	MagickWand **mw, **mw2;
 	unsigned int stack;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	stack = luaL_checkinteger(L, 2);
 	mw2 = lua_newuserdata(L, sizeof(MagickWand *));
@@ -270,7 +270,7 @@ colorFloodfillImage(lua_State *L)
 {
 	MagickWand **mw;
 	PixelWand **fill, **border;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	fill = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	border = luaL_checkudata(L, 4, PIXEL_WAND_METATABLE);
@@ -285,7 +285,7 @@ colorizeImage(lua_State *L)
 {
 	MagickWand **wand;
 	PixelWand **colorize, **opacity;
-	
+
 	wand = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	colorize = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	opacity = luaL_checkudata(L, 3, PIXEL_WAND_METATABLE);
@@ -297,7 +297,7 @@ static int
 commentImage(lua_State *L)
 {
 	MagickWand **wand;
-	
+
 	wand = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickCommentImage(*wand, luaL_checkstring(L, 2)));
 	return 1;
@@ -307,7 +307,7 @@ static int
 contrastImage(lua_State *L)
 {
 	MagickWand **wand;
-	
+
 	wand = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickContrastImage(*wand, luaL_checkinteger(L, 2)));
 	return 1;
@@ -317,7 +317,7 @@ static int
 cropImage(lua_State *L)
 {
 	MagickWand **wand;
-	
+
 	wand = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickCropImage(*wand, luaL_checkinteger(L, 2),
 	    luaL_checkinteger(L, 3), luaL_checkinteger(L, 4),
@@ -329,7 +329,7 @@ static int
 cycleColormapImage(lua_State *L)
 {
 	MagickWand **wand;
-	
+
 	wand = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickCycleColormapImage(*wand,
 	    luaL_checkinteger(L, 2)));
@@ -353,7 +353,7 @@ describeImage(lua_State *L)
 {
 	MagickWand **mw;
 	char *text;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	text = MagickDescribeImage(*mw);
 	lua_pushstring(L, text);
@@ -365,7 +365,7 @@ static int
 despeckleImage(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickDespeckleImage(*mw));
 	return 1;
@@ -375,7 +375,7 @@ static int
 displayImage(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickDisplayImage(*mw, luaL_checkstring(L, 2)));
 	return 1;
@@ -385,7 +385,7 @@ static int
 displayImages(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickDisplayImages(*mw, luaL_checkstring(L, 2)));
 	return 1;
@@ -503,7 +503,7 @@ frameImage(lua_State *L)
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	matte_color = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
-	
+
 	lua_pushinteger(L, MagickFrameImage(*mw, *matte_color,
 	    luaL_checkinteger(L, 3), luaL_checkinteger(L, 4),
 	    luaL_checkinteger(L, 5), luaL_checkinteger(L, 6)));
@@ -552,7 +552,7 @@ static int
 gammaImageChannel(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGammaImageChannel(*mw,
 	    luaL_checkoption(L, 2, "UndefinedChannel", channels),
@@ -564,7 +564,7 @@ static int
 getConfigureInfo(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, MagickGetConfigureInfo(*mw, luaL_checkstring(L, 2)));
 	return 1;
@@ -575,7 +575,7 @@ getException(lua_State *L)
 {
 	MagickWand **mw;
 	ExceptionType severity;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, MagickGetException(*mw, &severity));
 	lua_pushinteger(L, severity);
@@ -586,7 +586,7 @@ static int
 getFilename(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, MagickGetFilename(*mw));
 	return 1;
@@ -619,7 +619,7 @@ getImageBackgroundColor(lua_State *L)
 {
 	MagickWand **mw;
 	PixelWand **pw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageBackgroundColor(*mw, *pw));
@@ -632,7 +632,7 @@ getImageBluePrimary(lua_State *L)
 	MagickWand **mw;
 	PixelWand **pw;
 	double x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageBluePrimary(*mw, &x, &y));
@@ -646,7 +646,7 @@ getImageBorderColor(lua_State *L)
 {
 	MagickWand **mw;
 	PixelWand **pw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageBorderColor(*mw, *pw));
@@ -659,7 +659,7 @@ getImageBoundingBox(lua_State *L)
 	MagickWand **mw;
 	unsigned long width, height;
 	long x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageBoundingBox(*mw,
 	    luaL_checknumber(L, 2), &width, &height, &x, &y));
@@ -674,7 +674,7 @@ static int
 getImageChannelDepth(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageChannelDepth(*mw,
 	    luaL_checkoption(L, 2, "UndefinedChannel", channels)));
@@ -686,7 +686,7 @@ getImageChannelExtrema(lua_State *L)
 {
 	MagickWand **mw;
 	unsigned long minima, maxima;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageChannelExtrema(*mw,
 	    luaL_checkoption(L, 2, "UndefinedChannel", channels), &minima,
@@ -701,7 +701,7 @@ getImageChannelMean(lua_State *L)
 {
 	MagickWand **mw;
 	double mean, standard_deviation;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageChannelMean(*mw,
 	    luaL_checkoption(L, 2, "UndefinedChannel", channels), &mean,
@@ -716,7 +716,7 @@ getImageColormapColor(lua_State *L)
 {
 	MagickWand **mw;
 	PixelWand **pw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 3, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageColormapColor(*mw,
@@ -728,7 +728,7 @@ static int
 getImageColors(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageColors(*mw));
 	return 1;
@@ -796,7 +796,7 @@ static int
 getImageDelay(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageDelay(*mw));
 	return 1;
@@ -806,7 +806,7 @@ static int
 getImageDepth(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageDepth(*mw));
 	return 1;
@@ -817,7 +817,7 @@ getImageExtrema(lua_State *L)
 {
 	MagickWand **mw;
 	unsigned long minima, maxima;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageExtrema(*mw, &minima, &maxima));
 	lua_pushinteger(L, minima);
@@ -829,7 +829,7 @@ static int
 getImageFilename(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, MagickGetImageFilename(*mw));
 	return 1;
@@ -839,7 +839,7 @@ static int
 getImageFormat(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, MagickGetImageFormat(*mw));
 	return 1;
@@ -849,7 +849,7 @@ static int
 getImageFuzz(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushnumber(L, MagickGetImageFuzz(*mw));
 	return 1;
@@ -859,12 +859,13 @@ static int
 getImageGamma(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushnumber(L, MagickGetImageGamma(*mw));
 	return 1;
 }
 
+#if MagickLibInterfaceNewest > 14
 /* XXX factor out enum to string definitions? */
 static const char *const gravity[] = {
 	"ForgetGravity",
@@ -885,11 +886,12 @@ static int
 getImageGravity(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, gravity[MagickGetImageGravity(*mw)]);
 	return 1;
 }
+#endif
 
 static int
 getImageGreenPrimary(lua_State *L)
@@ -897,7 +899,7 @@ getImageGreenPrimary(lua_State *L)
 	MagickWand **mw;
 	PixelWand **pw;
 	double x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageGreenPrimary(*mw, &x, &y));
@@ -959,7 +961,7 @@ static int
 getImageInterlaceScheme(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, interlaces[MagickGetImageInterlaceScheme(*mw)]);
 	return 1;
@@ -969,7 +971,7 @@ static int
 getImageIterations(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageIterations(*mw));
 	return 1;
@@ -980,7 +982,7 @@ getImageMatteColor(lua_State *L)
 {
 	MagickWand **mw;
 	PixelWand **pw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageMatteColor(*mw, *pw));
@@ -1005,7 +1007,7 @@ static int
 getImageOrientation(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, orientations[MagickGetImageOrientation(*mw)]);
 	return 1;
@@ -1018,7 +1020,7 @@ getImagePage(lua_State *L)
 	MagickWand **mw;
 	unsigned long width, height;
 	long x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImagePage(*mw, &width, &height, &x, &y));
 	lua_pushinteger(L, width);
@@ -1034,7 +1036,7 @@ getImageRedPrimary(lua_State *L)
 	MagickWand **mw;
 	PixelWand **pw;
 	double x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageRedPrimary(*mw, &x, &y));
@@ -1056,7 +1058,7 @@ static int
 getImageRenderingIntent(lua_State *L)
 {
 	MagickWand **mw;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushstring(L, intents[MagickGetImageRenderingIntent(*mw)]);
 	return 1;
@@ -1067,7 +1069,7 @@ getImageResolution(lua_State *L)
 {
 	MagickWand **mw;
 	double x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageResolution(*mw, &x, &y));
 	lua_pushnumber(L, x);
@@ -1080,7 +1082,7 @@ getImageScene(lua_State *L)
 {
 	MagickWand **mw;
 	double x, y;
-	
+
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageScene(*mw));
 	return 1;
@@ -1187,7 +1189,7 @@ setImageBackgroundColor(lua_State *L)
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
-	
+
 	lua_pushinteger(L, MagickSetImageBackgroundColor(*mw, *pw));
 	return 1;
 }
@@ -1315,7 +1317,9 @@ struct luaL_Reg magick_wand_methods[] = {
 	{ "getImageFormat",		getImageFormat },
 	{ "getImageFuzz",		getImageFuzz },
 	{ "getImageGamma",		getImageGamma },
+#if MagickLibInterfaceNewest > 14
 	{ "getImageGravity",		getImageGravity },
+#endif
 	{ "getImageGreenPrimary",	getImageGreenPrimary },
 	{ "setImageFormat",		setImageFormat },
 	{ "getImageWidth",		getImageWidth },
