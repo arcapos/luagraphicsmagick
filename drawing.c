@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2017 Micro Systems Marc Balmer, CH-5073 Gipf-Oberfrick.
+ * Copyright (c) 2016 - 2023 Micro Systems Marc Balmer, CH-5073 Gipf-Oberfrick.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ * ARE DISCLAIMED. IN NO EVENT SHALL MICRO SYSTEM MARC BALMER BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -125,7 +125,7 @@ circle(lua_State *L)
 	dw = luaL_checkudata(L, 1, DRAWING_WAND_METATABLE);
 	DrawCircle(*dw, luaL_checknumber(L, 2), luaL_checknumber(L, 3),
 	    luaL_checknumber(L, 4), luaL_checknumber(L, 5));
-	return 0;	
+	return 0;
 }
 
 static int
@@ -155,7 +155,6 @@ static int
 setClipPath(lua_State *L)
 {
 	DrawingWand **dw;
-	char *clip_path;
 
 	dw = luaL_checkudata(L, 1, DRAWING_WAND_METATABLE);
 	DrawSetClipPath(*dw, luaL_checkstring(L, 2));
@@ -185,7 +184,7 @@ setClipRule(lua_State *L)
 	DrawingWand **dw;
 
 	dw = luaL_checkudata(L, 1, DRAWING_WAND_METATABLE);
-	DrawSetClipRule(*dw, luaL_checkoption(L, 2, "UndefinedRule", 
+	DrawSetClipRule(*dw, luaL_checkoption(L, 2, "UndefinedRule",
 	    fill_rules));
 	return 0;
 }
@@ -273,7 +272,7 @@ comment(lua_State *L)
 
 	dw = luaL_checkudata(L, 1, DRAWING_WAND_METATABLE);
 	DrawComment(*dw, luaL_checkstring(L, 2));
-	return 0;	
+	return 0;
 }
 
 static int
@@ -372,7 +371,7 @@ setFillRule(lua_State *L)
 	DrawingWand **dw;
 
 	dw = luaL_checkudata(L, 1, DRAWING_WAND_METATABLE);
-	DrawSetFillRule(*dw, luaL_checkoption(L, 2, "UndefinedRule", 
+	DrawSetFillRule(*dw, luaL_checkoption(L, 2, "UndefinedRule",
 	    fill_rules));
 	return 0;
 }
@@ -460,14 +459,14 @@ getFontStretch(lua_State *L)
 	lua_pushstring(L, stretch_types[DrawGetFontStretch(*dw)]);
 	return 1;
 }
-	
+
 static int
 setFontStretch(lua_State *L)
 {
 	DrawingWand **dw;
 
 	dw = luaL_checkudata(L, 1, DRAWING_WAND_METATABLE);
-	DrawSetFontStretch(*dw, luaL_checkoption(L, 2, "NormalStretch", 
+	DrawSetFontStretch(*dw, luaL_checkoption(L, 2, "NormalStretch",
 	    stretch_types));
 	return 0;
 }
@@ -489,7 +488,7 @@ getFontStyle(lua_State *L)
 	lua_pushstring(L, styles[DrawGetFontStyle(*dw)]);
 	return 1;
 }
-	
+
 static int
 setFontStyle(lua_State *L)
 {
@@ -544,7 +543,7 @@ getGravity(lua_State *L)
 	lua_pushstring(L, gravity[DrawGetGravity(*dw)]);
 	return 1;
 }
-	
+
 static int
 setGravity(lua_State *L)
 {
@@ -1063,6 +1062,7 @@ struct luaL_Reg drawing_wand_methods[] = {
 	{ "getClipRule",	getClipRule },
 	{ "setClipRule",	setClipRule },
 	{ "getClipUnits",	getClipUnits },
+	{ "clone",		clone },
 	{ "getException",	getException },
 	{ "setClipUnits",	setClipUnits },
 	{ "color",		color },
@@ -1071,6 +1071,7 @@ struct luaL_Reg drawing_wand_methods[] = {
 	{ "ellipse",		ellipse },
 	{ "getFillColor",	getFillColor },
 	{ "setFillColor",	setFillColor },
+	{ "setFillPatternURL",	setFillPatternURL },
 	{ "getFillOpacity",	getFillOpacity },
 	{ "setFillOpacity",	setFillOpacity },
 	{ "getFillRule",	getFillRule },
@@ -1113,7 +1114,8 @@ struct luaL_Reg drawing_wand_methods[] = {
 	{ "pathEllipticArcRelative",
 				pathEllipticArcRelative },
 	{ "pathFinish",		pathFinish },
-	{ "pathLineToAbsolute",	pathLineToRelative },
+	{ "pathLineToAbsolute",	pathLineToAbsolute },
+	{ "pathLineToRelative",	pathLineToRelative },
 	{ "pathLineToHorizontalAbsolute",
 				pathLineToHorizontalAbsolute },
 	{ "pathLineToHorizontalRelative",
