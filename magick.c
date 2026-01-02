@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2017 Micro Systems Marc Balmer, CH-5073 Gipf-Oberfrick.
+ * Copyright (c) 2016 - 2023 Micro Systems Marc Balmer, CH-5073 Gipf-Oberfrick.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -630,11 +630,9 @@ static int
 getImageBluePrimary(lua_State *L)
 {
 	MagickWand **mw;
-	PixelWand **pw;
 	double x, y;
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
-	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageBluePrimary(*mw, &x, &y));
 	lua_pushnumber(L, x);
 	lua_pushnumber(L, y);
@@ -897,11 +895,9 @@ static int
 getImageGreenPrimary(lua_State *L)
 {
 	MagickWand **mw;
-	PixelWand **pw;
 	double x, y;
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
-	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageGreenPrimary(*mw, &x, &y));
 	lua_pushnumber(L, x);
 	lua_pushnumber(L, y);
@@ -1034,11 +1030,9 @@ static int
 getImageRedPrimary(lua_State *L)
 {
 	MagickWand **mw;
-	PixelWand **pw;
 	double x, y;
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
-	pw = luaL_checkudata(L, 2, PIXEL_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageRedPrimary(*mw, &x, &y));
 	lua_pushnumber(L, x);
 	lua_pushnumber(L, y);
@@ -1081,7 +1075,6 @@ static int
 getImageScene(lua_State *L)
 {
 	MagickWand **mw;
-	double x, y;
 
 	mw = luaL_checkudata(L, 1, MAGICK_WAND_METATABLE);
 	lua_pushinteger(L, MagickGetImageScene(*mw));
